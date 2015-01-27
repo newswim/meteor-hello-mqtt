@@ -46,34 +46,11 @@ Meteor.publish('messages', function(filter) {
 
 
 Meteor.methods({
-	// start receiving messages with the set topic-query
-	startClient: function() {
-		console.log("startClient called");
-		mqttClient.subscribe("#");
-	},
-	// stop receiving messages
-	stopClient: function() {
-		console.log("stopClient called");
-		mqttClient.unsubscribe(topicQuery);
-	},
-	// set a new topic query, unsubscribe from the old and subscribe to the new one
-	setTopicQuery: function(newTopicQuery) {
-		console.log("set new Topic: " + newTopicQuery);
-		mqttClient.unsubscribe(topicQuery).subscribe(newTopicQuery);
-		topicQuery = newTopicQuery;
-	},
-	// send the topic query to the caller
-	getTopicQuery: function() {
-		return topicQuery;
-	},
 	// publishes a message with a topic to the broker
 	publishMessage: function(topic, message) {
 		console.log("message to send: " + topic + ": " + message);
 		mqttClient.publish(topic, message, function() {
 			console.log("message sent: " + message);
 		});
-	},
-	getConfigValues: function() {
-		return config;
 	}
 });

@@ -3,6 +3,7 @@
   Session.setDefault("counter", 0);
   
   collection = new Meteor.Collection("messages");
+  
   collection.find({}).observe({
 	  added: function(item) {
 		  console.log(item);
@@ -13,6 +14,8 @@
 		  }
 	  }
   })
+  
+  
   Meteor.subscribe("messages", "house/garden-room/temperature");
 
   Template.hello.helpers({
