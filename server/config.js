@@ -1,4 +1,4 @@
 config = {
-    mqttHost: "192.168.10.195",
+    mqttHost: "192.168.11.1",
     mqttPort: 1883
 };

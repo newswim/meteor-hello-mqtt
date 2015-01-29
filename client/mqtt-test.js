@@ -1,6 +1,7 @@
 
   // counter starts at 0
   Session.setDefault("counter", 0);
+ 	  Session.set("doorbell", false);
   
   collection = new Meteor.Collection("messages");
   
@@ -12,11 +13,15 @@
 		  if(item.topic == "temperature") {
 			  Session.set("temperature", item.message);
 		  }
+		  if(item.topic == "doorbell") {
+			Session.set("doorbell", !Session.get("doorbell"));
+		}
 	  }
   })
   
   
   Meteor.subscribe("messages", "house/garden-room/temperature");
+
 
   Template.hello.helpers({
     counter: function () {
@@ -27,6 +32,9 @@
 	},
 	temperature: function() {
 		return Session.get("temperature");
+	},
+	doorbell: function() {
+		return Session.get("doorbell") ? "BingBong" : ""
 	}
   });
 
