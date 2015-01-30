@@ -5,10 +5,12 @@ Meteor.startup(function() {
 
 var mqtt = Meteor.require("mqtt");
 
+// initialize the mqtt client from mqtt npm-package
 var mqttClient = mqtt.createClient(config.mqttPort, config.mqttHost);
 
 // We are subscribing to every thing here. 
 // In a better app we'd control subscriptions from the client end.
+// The # is a MQTT wildcard. Regular subscriptions look like 'home/livingroom/temperature'
 mqttClient.on("connect", function() {
 	console.log("client connected");
 	mqttClient.subscribe("#");
@@ -22,7 +24,8 @@ Meteor.publish('messages', function(filter) {
 	console.log("FILTER ", filter);
 
 
-	// initialize the mqtt client from mqtt npm-package
+	//Every time we get an MQTT message, create a dummy
+	// Document and add it to the collection
 	mqttClient.on("message", function(topic, message) {
 		console.log(topic + ": " + message);
 		// build the object to store
